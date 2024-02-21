@@ -88,7 +88,6 @@ public class PlayerController : MonoBehaviour
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0;
         rb.velocity = new Vector2(transform.localScale.x * dashSpeed, 0);
-        animator.SetTrigger("Dash");
         yield return new WaitForSeconds(0.3f); 
         rb.gravityScale = originalGravity;
         isDashing = false;
