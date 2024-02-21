@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 90584653}
   - component: {fileID: 90584652}
   - component: {fileID: 90584651}
+  - component: {fileID: 90584654}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -184,7 +185,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 8.217344
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -209,12 +210,46 @@ Transform:
   m_GameObject: {fileID: 90584650}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: -2.5717115, y: -2.13, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &90584654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 90584650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShowDebugText: 0
+  m_ShowCameraFrustum: 1
+  m_IgnoreTimeScale: 0
+  m_WorldUpOverride: {fileID: 0}
+  m_UpdateMethod: 2
+  m_BlendUpdateMethod: 1
+  m_DefaultBlend:
+    m_Style: 1
+    m_Time: 2
+    m_CustomCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  m_CustomBlends: {fileID: 0}
+  m_CameraCutEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_CameraActivatedEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &112800281
 GameObject:
   m_ObjectHideFlags: 0
@@ -552,6 +587,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3145483612340049459, guid: 1f74c3f129d411649af92266e0369219, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7446237331336627764, guid: 1f74c3f129d411649af92266e0369219, type: 3}
       propertyPath: m_Name
       value: Checkpoint
@@ -1516,7 +1555,7 @@ Tilemap:
       - {fileID: 1065656605, guid: ed132734f2878b948a8791119f923658, type: 3}
       - {fileID: -1706373490, guid: ed132734f2878b948a8791119f923658, type: 3}
       - {fileID: 2132100266, guid: ed132734f2878b948a8791119f923658, type: 3}
-      m_AnimationSpeed: 3.37323
+      m_AnimationSpeed: 4.334827
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 2, y: -3, z: 0}
@@ -1531,7 +1570,7 @@ Tilemap:
       - {fileID: 1065656605, guid: ed132734f2878b948a8791119f923658, type: 3}
       - {fileID: -1706373490, guid: ed132734f2878b948a8791119f923658, type: 3}
       - {fileID: 2132100266, guid: ed132734f2878b948a8791119f923658, type: 3}
-      m_AnimationSpeed: 3.6806374
+      m_AnimationSpeed: 3.0318356
       m_AnimationTimeOffset: 0
       m_Flags: 0
   m_TileAssetArray:
@@ -1796,6 +1835,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3145483612340049459, guid: 1f74c3f129d411649af92266e0369219, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7446237331336627764, guid: 1f74c3f129d411649af92266e0369219, type: 3}
       propertyPath: m_Name
       value: Checkpoint (1)
