@@ -26,6 +26,15 @@ public class PlayerController : MonoBehaviour
             float move = Input.GetAxis("Horizontal");
             rb.velocity = new Vector2(move * moveSpeed, rb.velocity.y);
 
+
+            if (rb.velocity.x > 0) { 
+                transform.localScale = new Vector2(1, 1);
+            }
+            else
+            {
+                transform.localScale = new Vector2(-1, 1);
+            }
+
             if (Mathf.Abs(move) > 0)
             {
                 animator.SetBool("isWalking", true);
