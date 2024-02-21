@@ -9,6 +9,8 @@ public class MenuController : MonoBehaviour
 {
     public MenuItem[] MenuItems;
     public GameObject MenuItemPrefab;
+
+    public AudioSource SelectAudio;
     
     private int selectedItem;
     private readonly List<MenuItemController> menuItemObjs = new();
@@ -50,10 +52,12 @@ public class MenuController : MonoBehaviour
         {
             menuItemObjs[prevSelectedItem].Deselect();
             menuItemObjs[selectedItem].Select();
+            if (SelectAudio) SelectAudio.Play();
         }
 
         if (Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.Return))
         {
+            if (SelectAudio) SelectAudio.Play();
             menuItemObjs[selectedItem].Click();
         }
     }

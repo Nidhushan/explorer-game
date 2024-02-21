@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [System.Serializable]
@@ -19,6 +20,7 @@ public struct TransformSnapshot
     }
 }
 
+[RequireComponent(typeof(AudioSource))]
 public class TimeRewind : MonoBehaviour
 {
     public static bool MockInteraction = false;
@@ -28,9 +30,11 @@ public class TimeRewind : MonoBehaviour
     public float recordInterval = 0.1f;
     private float timer;
     private bool isRewinding = false;
+    private AudioSource audioSource;
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         if (shadow == null)
         {
             Debug.LogError("Shadow object is not assigned!");
@@ -39,14 +43,14 @@ public class TimeRewind : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        if (isRewinding) return; 
-
-        timer += Time.fixedDeltaTime;
         RecordCurrentState();
+        if (isRewinding) return;
 
         UpdateShadowPosition();
+
+        timer += Time.deltaTime;
 
         if (Input.GetKeyDown(KeyCode.R) && !isRewinding)
         {
@@ -56,10 +60,8 @@ public class TimeRewind : MonoBehaviour
 
     private void RecordCurrentState()
     {
-        if (snapshots.Count > Mathf.Floor(5f / Time.fixedDeltaTime)) // Assuming 5 seconds of memory
-        {
-            snapshots.RemoveAt(0);
-        }
+        int lastIndexToRemove = snapshots.FindLastIndex((item) => (item.timestamp <= Time.time - 5f)); // Assuming 5 seconds of memory
+        snapshots.RemoveRange(0, lastIndexToRemove + 1);
 
         snapshots.Add(new TransformSnapshot(transform.position, transform.rotation, Time.time, Input.GetKeyDown(KeyCode.Q)));
     }
@@ -114,7 +116,9 @@ public class TimeRewind : MonoBehaviour
             }
         }
 
-        if (!endSnapshot.HasValue) yield break; 
+        if (!endSnapshot.HasValue) yield break;
+
+        audioSource.Play();
 
         while (Time.time < endTime && endSnapshot.HasValue)
         {

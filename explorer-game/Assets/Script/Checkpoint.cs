@@ -1,10 +1,12 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(AudioSource))]
 public class Checkpoint : MonoBehaviour
 {
     private Animator animator;
     private ParticleSystem particle;
+    private AudioSource audioSource;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -12,8 +14,12 @@ public class Checkpoint : MonoBehaviour
         {
             CheckpointManager.SetCheckpoint(transform.position);
 
+            if (!animator.GetBool("unlocked"))
+            {
+                particle.Play();
+                audioSource.Play();
+            }
             animator.SetBool("unlocked", true);
-            particle.Play();
         }
     }
 
@@ -21,5 +27,6 @@ public class Checkpoint : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         particle = GetComponentInChildren<ParticleSystem>();
+        audioSource = GetComponent<AudioSource>();
     }
 }

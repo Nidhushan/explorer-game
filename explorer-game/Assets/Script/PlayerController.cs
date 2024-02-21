@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(Dash());
         }
 
-        if (Input.GetKeyDown(KeyCode.F) && !shadowExists)
+        if (Input.GetKeyDown(KeyCode.F) && !shadowExists && !IsGhost)
         {
             CreateShadow();
         }
@@ -89,6 +89,14 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Player"))
         {
             isGrounded = true;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Death") && !IsGhost)
+        {
+            transform.position = CheckpointManager.lastCheckpointPosition;
         }
     }
 

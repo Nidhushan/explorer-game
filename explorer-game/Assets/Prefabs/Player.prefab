@@ -125,7 +125,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 2
   m_Material: {fileID: 6200000, guid: 8971e2dac79ff8e4da9662fec366cd87, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
@@ -149,9 +149,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2b5fcf982e04941b853cbd54f9d60c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
-  jumpForce: 500
-  dashSpeed: 10
+  moveSpeed: 4
+  jumpForce: 600
+  dashSpeed: 8
   GhostColor: {r: 1, g: 0, b: 0.5882353, a: 0.5411765}
   IsGhost: 0
   shadowPrefab: {fileID: 0}

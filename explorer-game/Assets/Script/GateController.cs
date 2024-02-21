@@ -29,11 +29,11 @@ public class GateController : MonoBehaviour
         collider = GetComponent<Collider2D>();
         if (IsOpen)
         {
-            CloseGate();
+            OpenGate();
         }
         else
         {
-            OpenGate();
+            CloseGate();
         }
     }
 }

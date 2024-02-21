@@ -2,6 +2,7 @@ using TMPro;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class ButtonInteraction : MonoBehaviour
 {
     public MovingPlatformController movingPlatform;
@@ -10,12 +11,14 @@ public class ButtonInteraction : MonoBehaviour
     private bool isPlayerNear = false;
     private bool isShadowNear = false;
     private Animator animator;
+    private AudioSource audioSource;
 
     void Update()
     {
         if ((isPlayerNear && Input.GetKeyDown(KeyCode.Q)) || (isShadowNear && TimeRewind.MockInteraction))
         {
             movingPlatform.Toggle();
+            audioSource.Play();
             animator.SetBool("atLeft", movingPlatform.IsMovingTowardsTarget);
         }
         hint.gameObject.SetActive(isPlayerNear || isShadowNear);
@@ -44,5 +47,6 @@ public class ButtonInteraction : MonoBehaviour
     private void Start()
     {
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 }
