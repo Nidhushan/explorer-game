@@ -2,76 +2,121 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public struct TransformSnapshot
+{
+    public Vector3 position;
+    public Quaternion rotation;
+    public float timestamp;
+
+    public TransformSnapshot(Vector3 pos, Quaternion rot, float time)
+    {
+        position = pos;
+        rotation = rot;
+        timestamp = time;
+    }
+}
+
 public class TimeRewind : MonoBehaviour
 {
+    private List<TransformSnapshot> snapshots = new List<TransformSnapshot>();
+    public GameObject shadow;
+    public float recordInterval = 0.1f;
+    private float timer;
     private bool isRewinding = false;
-    public float rewindTime = 3f;
-    List<Vector2> positionsHistory;
 
-    // Start is called before the first frame update
     void Start()
     {
-        positionsHistory = new List<Vector2>();
+        if (shadow == null)
+        {
+            Debug.LogError("Shadow object is not assigned!");
+            this.enabled = false;
+            return;
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
+        if (isRewinding) return; 
+
+        timer += Time.deltaTime;
+        if (timer >= recordInterval)
         {
-            StartRewind();
+            RecordCurrentState();
+            timer = 0f;
         }
-        if (Input.GetKeyUp(KeyCode.R))
+
+        UpdateShadowPosition();
+
+        if (Input.GetKeyDown(KeyCode.R) && !isRewinding)
         {
-            StopRewind();
+            StartCoroutine(SmoothRewind());
         }
     }
 
-    void FixedUpdate()
+    private void RecordCurrentState()
     {
-        if (isRewinding)
+        if (snapshots.Count > Mathf.Floor(5f / recordInterval)) // Assuming 5 seconds of memory
         {
-            Rewind();
+            snapshots.RemoveAt(0);
         }
-        else
-        {
-            Record();
-        }
+
+        snapshots.Add(new TransformSnapshot(transform.position, transform.rotation, Time.time));
     }
 
-    void Rewind()
+    private void UpdateShadowPosition()
     {
-        if (positionsHistory.Count > 0)
+        TransformSnapshot? targetSnapshot = null;
+        foreach (var snapshot in snapshots)
         {
-            transform.position = positionsHistory[0];
-            positionsHistory.RemoveAt(0);
+            if (snapshot.timestamp <= Time.time - 3f)
+            {
+                targetSnapshot = snapshot;
+                break;
+            }
         }
-        else
+
+        if (targetSnapshot.HasValue)
         {
-            StopRewind();
+            shadow.transform.position = targetSnapshot.Value.position;
+            shadow.transform.rotation = targetSnapshot.Value.rotation;
         }
     }
 
-    void Record()
-    {
-        if (positionsHistory.Count > Mathf.Floor(rewindTime / Time.fixedDeltaTime))
-        {
-            positionsHistory.RemoveAt(positionsHistory.Count - 1);
-        }
-        positionsHistory.Insert(0, transform.position);
-    }
-
-    public void StartRewind()
+    private IEnumerator SmoothRewind()
     {
         isRewinding = true;
-        GetComponent<Rigidbody2D>().isKinematic = true; // Prevents physics from affecting the player while rewinding
-        TimeController.PauseTime();
-    }
 
-    public void StopRewind()
-    {
+        float rewindDuration = 0.5f; 
+        float startTime = Time.time;
+        float endTime = startTime + rewindDuration;
+
+        TransformSnapshot startSnapshot = new TransformSnapshot(transform.position, transform.rotation, Time.time);
+        TransformSnapshot? endSnapshot = null;
+
+        if (snapshots.Count > 0)
+        {
+            
+            foreach (var snapshot in snapshots)
+            {
+                if (snapshot.timestamp <= Time.time - 3f)
+                {
+                    endSnapshot = snapshot;
+                    break;
+                }
+            }
+        }
+
+        if (!endSnapshot.HasValue) yield break; 
+
+        while (Time.time < endTime && endSnapshot.HasValue)
+        {
+            float t = (Time.time - startTime) / rewindDuration;
+            transform.position = Vector3.Lerp(startSnapshot.position, endSnapshot.Value.position, t);
+            transform.rotation = Quaternion.Lerp(startSnapshot.rotation, endSnapshot.Value.rotation, t);
+            yield return null;
+        }
+
         isRewinding = false;
-        GetComponent<Rigidbody2D>().isKinematic = false; // Re-enables physics
-        TimeController.ResumeTime();
     }
 }
