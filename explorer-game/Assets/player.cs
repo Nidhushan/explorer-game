@@ -5,6 +5,23 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+
+    struct PlayerState
+    {
+        public Vector3 position;
+        public Quaternion rotation;
+        public float time;
+    }
+
+    // List to store player states
+    List<PlayerState> playerStates = new List<PlayerState>();
+
+    // Reference to the player GameObject
+    public GameObject player;
+
+    // Whether currently rewinding time
+    bool isRewinding = false;
+
     public float movementSpeed = 5f;
     private Rigidbody2D rb;
     SpriteRenderer spriteRenderer;
@@ -121,6 +138,14 @@ public class Player : MonoBehaviour
                 }
             }
         }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            StartRewind();
+        }
+        else if (Input.GetKeyUp(KeyCode.R))
+        {
+            StopRewind();
+        }
 
     }
 
@@ -135,4 +160,63 @@ public class Player : MonoBehaviour
         }
         return -1;
     }
+
+    void FixedUpdate()
+    {
+        if (isRewinding)
+        {
+            RewindTime();
+        }
+        else
+        {
+            RecordTime();
+        }
+    }
+
+    // Start rewinding time
+    void StartRewind()
+    {
+        isRewinding = true;
+    }
+
+    // Stop rewinding time
+    void StopRewind()
+    {
+        isRewinding = false;
+    }
+
+    // Record player's position and rotation
+    void RecordTime()
+    {
+        playerStates.Add(new PlayerState
+        {
+            position = player.transform.position,
+            rotation = player.transform.rotation,
+            time = Time.time
+        });
+    }
+
+    // Rewind time by replaying player's actions in reverse
+    void RewindTime()
+    {
+        if (playerStates.Count > 0)
+        {
+            PlayerState prevState = playerStates[playerStates.Count - 1];
+            player.transform.position = prevState.position;
+            player.transform.rotation = prevState.rotation;
+            playerStates.RemoveAt(playerStates.Count - 1);
+        }
+        else
+        {
+            StopRewind();
+        }
+    }
 }
+
+
+
+    
+
+
+    
+
