@@ -7,15 +7,30 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 5.0f;
     public float jumpForce = 500f;
     public float dashSpeed = 10f;
+    public Color GhostColor = Color.white;
+    public bool IsGhost = false;
+
     private Rigidbody2D rb;
     private Animator animator;
+    private SpriteRenderer spriteRenderer;
     private bool isGrounded = true;
     private bool isDashing = false;
+
+    public void Ghostify()
+    {
+        spriteRenderer.color = GhostColor;
+        IsGhost = true;
+    }
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        if (IsGhost)
+        {
+            Ghostify();
+        }
     }
 
     void Update()
