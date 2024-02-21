@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public enum MenuCallback
 {
-    Start, Resume, Restart, Pause
+    Start, Resume, Restart, Pause, Level1, Level2, Menu
 }
 
 [Serializable]
@@ -65,16 +66,14 @@ public class MenuItemController : MonoBehaviour
 
         switch (data.Callback)
         {
-            case MenuCallback.Start:
-                Debug.Log("UI trigger start");
+            // Main Menu
+            case MenuCallback.Level1:
+                GameController.state = GameState.InGame;
+                SceneManager.LoadScene("Level1");
                 break;
-            case MenuCallback.Resume:
-                Debug.Log("UI trigger resume");
-                break;
-            case MenuCallback.Restart:
-                Debug.Log("UI trigger restart");
-                break;
-            case MenuCallback.Pause:
+            case MenuCallback.Level2:
+                GameController.state = GameState.InGame;
+                SceneManager.LoadScene("Level2");
                 break;
         }
     }

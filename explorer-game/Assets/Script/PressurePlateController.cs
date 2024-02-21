@@ -4,6 +4,7 @@ using UnityEngine;
 public class PressurePlateController : MonoBehaviour
 {
     public static int activePlates = 0;
+    public int pressure = 0;
 
     private Animator animator;
 
@@ -11,8 +12,12 @@ public class PressurePlateController : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            animator.SetBool("isActive", true);
+            if (pressure == 0)
+            {
+                animator.SetBool("isActive", true);
+            }
             activePlates++;
+            pressure++;
         }
     }
 
@@ -20,8 +25,13 @@ public class PressurePlateController : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            animator.SetBool("isActive", false);
             activePlates--;
+            pressure--;
+            if (pressure == 0)
+            {
+                animator.SetBool("isActive", false);
+            }
+
         }
     }
 

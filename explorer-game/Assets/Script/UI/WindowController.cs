@@ -5,12 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class WindowController : MonoBehaviour
 {
-    public static Dictionary<string, WindowController> windows = new();
     public static WindowController activeInstance;
     public bool IsShown { get; private set; }
     public string windowID;
-
-    protected Animator animator;
 
     public bool Show()
     {
@@ -20,24 +17,15 @@ public class WindowController : MonoBehaviour
         }
 
         activeInstance?.Hide();
-        animator.SetBool("show", true);
+        GetComponent<Animator>().SetBool("show", true);
         activeInstance = this;
         IsShown = true;
-        gameObject.SetActive(true);
         return true;
     }
 
     public void Hide()
     {
-        animator.SetBool("show", false);
+        GetComponent<Animator>().SetBool("show", false);
         IsShown = false;
-        gameObject.SetActive(false);
-    }
-
-    private void Start()
-    {
-        windows[windowID] = this;
-        animator = GetComponent<Animator>();
-        Hide();
     }
 }

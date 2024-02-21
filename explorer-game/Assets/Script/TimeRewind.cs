@@ -8,17 +8,21 @@ public struct TransformSnapshot
     public Vector3 position;
     public Quaternion rotation;
     public float timestamp;
+    public bool interacted;
 
-    public TransformSnapshot(Vector3 pos, Quaternion rot, float time)
+    public TransformSnapshot(Vector3 pos, Quaternion rot, float time, bool interact)
     {
         position = pos;
         rotation = rot;
         timestamp = time;
+        interacted = interact;
     }
 }
 
 public class TimeRewind : MonoBehaviour
 {
+    public static bool MockInteraction = false;
+
     private List<TransformSnapshot> snapshots = new List<TransformSnapshot>();
     public GameObject shadow;
     public float recordInterval = 0.1f;
@@ -35,16 +39,12 @@ public class TimeRewind : MonoBehaviour
         }
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (isRewinding) return; 
 
-        timer += Time.deltaTime;
-        if (timer >= recordInterval)
-        {
-            RecordCurrentState();
-            timer = 0f;
-        }
+        timer += Time.fixedDeltaTime;
+        RecordCurrentState();
 
         UpdateShadowPosition();
 
@@ -56,12 +56,12 @@ public class TimeRewind : MonoBehaviour
 
     private void RecordCurrentState()
     {
-        if (snapshots.Count > Mathf.Floor(5f / recordInterval)) // Assuming 5 seconds of memory
+        if (snapshots.Count > Mathf.Floor(5f / Time.fixedDeltaTime)) // Assuming 5 seconds of memory
         {
             snapshots.RemoveAt(0);
         }
 
-        snapshots.Add(new TransformSnapshot(transform.position, transform.rotation, Time.time));
+        snapshots.Add(new TransformSnapshot(transform.position, transform.rotation, Time.time, Input.GetKeyDown(KeyCode.Q)));
     }
 
     private void UpdateShadowPosition()
@@ -78,8 +78,15 @@ public class TimeRewind : MonoBehaviour
 
         if (targetSnapshot.HasValue)
         {
+            shadow.SetActive(true);
             shadow.transform.position = targetSnapshot.Value.position;
             shadow.transform.rotation = targetSnapshot.Value.rotation;
+            MockInteraction = targetSnapshot.Value.interacted;
+        }
+        else
+        {
+            MockInteraction = false;
+            shadow.SetActive(false);
         }
     }
 
@@ -91,7 +98,7 @@ public class TimeRewind : MonoBehaviour
         float startTime = Time.time;
         float endTime = startTime + rewindDuration;
 
-        TransformSnapshot startSnapshot = new TransformSnapshot(transform.position, transform.rotation, Time.time);
+        TransformSnapshot startSnapshot = new TransformSnapshot(transform.position, transform.rotation, Time.time, false);
         TransformSnapshot? endSnapshot = null;
 
         if (snapshots.Count > 0)

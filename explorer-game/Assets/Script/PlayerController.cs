@@ -86,7 +86,7 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Player"))
         {
             isGrounded = true;
         }
@@ -105,6 +105,7 @@ public class PlayerController : MonoBehaviour
     void CreateShadow()
     {
         GameObject shadowInstance = Instantiate(shadowPrefab, transform.position, Quaternion.identity);
+        shadowInstance.GetComponent<PlayerController>().Ghostify();
         shadowExists = true; 
 
         Destroy(shadowInstance, shadowDuration);
