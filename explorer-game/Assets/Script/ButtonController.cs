@@ -1,15 +1,25 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class ButtonController : MonoBehaviour
 {
     public GateController gate; 
     private bool isPlayerNear = false;
+    private Animator animator;
 
     void Update()
     {
         if (isPlayerNear && Input.GetKeyDown(KeyCode.Q))
         {
-            gate.OpenGate();
+            animator.SetTrigger("pressed");
+            if (gate.IsOpen)
+            {
+                gate.CloseGate();
+            }
+            else
+            {
+                gate.OpenGate();
+            }
         }
     }
 
@@ -27,5 +37,10 @@ public class ButtonController : MonoBehaviour
         {
             isPlayerNear = false;
         }
+    }
+
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
     }
 }

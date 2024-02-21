@@ -3,43 +3,39 @@ using UnityEngine;
 
 public class MovingPlatformController : MonoBehaviour
 {
-    public float moveSpeed = 2.0f; 
-    private Vector3 startPosition; 
-    private Vector3 targetPosition; 
-    public float moveDistance = 5.0f; 
-    public float returnSpeed = 0.5f; 
+    public float moveSpeed = 2.0f;
+
+    public Transform targetTransform;
+    public bool IsMovingTowardsTarget = false;
+
+    private Vector3 startPosition;
+    private Vector3 targetPosition => targetTransform.position;
+
+    public void Toggle()
+    {
+        IsMovingTowardsTarget = !IsMovingTowardsTarget;
+    }
 
     private void Start()
     {
         startPosition = transform.position; 
-        targetPosition = new Vector3(startPosition.x - moveDistance, startPosition.y, startPosition.z); 
     }
 
-    public void MoveLeft()
+    private void Update()
     {
-        StopAllCoroutines(); 
-        StartCoroutine(MoveTowards(targetPosition));
-    }
-
-    private IEnumerator MoveTowards(Vector3 target)
-    {
-        while (Vector3.Distance(transform.position, target) > 0.01f)
+        if (IsMovingTowardsTarget)
         {
-            transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
-            yield return null;
+            if (Vector3.Distance(transform.position, targetPosition) > 0.01f)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+            }
         }
-
-        StartCoroutine(ReturnToStart());
-    }
-
-    private IEnumerator ReturnToStart()
-    {
-        yield return new WaitForSeconds(2.0f);
-
-        while (Vector3.Distance(transform.position, startPosition) > 0.01f)
+        else
         {
-            transform.position = Vector3.MoveTowards(transform.position, startPosition, returnSpeed * Time.deltaTime);
-            yield return null;
+            if (Vector3.Distance(transform.position, startPosition) > 0.01f)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, startPosition, moveSpeed * Time.deltaTime);
+            }
         }
     }
 }

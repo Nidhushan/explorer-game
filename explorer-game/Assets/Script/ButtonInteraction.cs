@@ -3,14 +3,15 @@ using UnityEngine;
 public class ButtonInteraction : MonoBehaviour
 {
     public MovingPlatformController movingPlatform; 
-    private bool isPlayerNear = false; 
+    private bool isPlayerNear = false;
+    private Animator animator;
 
     void Update()
     {
-        
         if (isPlayerNear && Input.GetKeyDown(KeyCode.Q))
         {
-            movingPlatform.MoveLeft();
+            movingPlatform.Toggle();
+            animator.SetBool("atLeft", movingPlatform.IsMovingTowardsTarget);
         }
     }
 
@@ -28,5 +29,10 @@ public class ButtonInteraction : MonoBehaviour
         {
             isPlayerNear = false;
         }
+    }
+
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
     }
 }
