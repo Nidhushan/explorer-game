@@ -12,6 +12,9 @@ public class Checkpoint : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            if (other.GetComponent<PlayerController>().IsGhost)
+                return;
+
             CheckpointManager.SetCheckpoint(transform.position);
 
             if (!animator.GetBool("unlocked"))

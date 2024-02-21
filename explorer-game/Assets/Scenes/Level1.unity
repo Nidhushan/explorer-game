@@ -4494,7 +4494,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '[Esc] To reset. Your shadow is 5 seconds slower than you.'
+  m_text: '[R] To reset. Your shadow is 5 seconds slower than you.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 315682e37de57b34680a55b183f28cec, type: 2}
   m_sharedMaterial: {fileID: -987894647844156669, guid: 315682e37de57b34680a55b183f28cec, type: 2}
@@ -5742,19 +5742,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5525650128347888066, guid: bdb984686f5efed4e9a96ccce4b12fc1, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5525650128347888066, guid: bdb984686f5efed4e9a96ccce4b12fc1, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5525650128347888066, guid: bdb984686f5efed4e9a96ccce4b12fc1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 203.717
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 5525650128347888066, guid: bdb984686f5efed4e9a96ccce4b12fc1, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -318.4936
       objectReference: {fileID: 0}
     - target: {fileID: 6967281700883313104, guid: bdb984686f5efed4e9a96ccce4b12fc1, type: 3}
       propertyPath: m_AnchorMax.y
@@ -5771,6 +5771,10 @@ PrefabInstance:
     - target: {fileID: 6967281700883313104, guid: bdb984686f5efed4e9a96ccce4b12fc1, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7151927058076482007, guid: bdb984686f5efed4e9a96ccce4b12fc1, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 7290497164488551616, guid: bdb984686f5efed4e9a96ccce4b12fc1, type: 3}
       propertyPath: m_AnchorMax.y
@@ -5915,7 +5919,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '[R] To rewind back to your shadow'
+  m_text: '[W] To rewind back to your shadow'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 315682e37de57b34680a55b183f28cec, type: 2}
   m_sharedMaterial: {fileID: -987894647844156669, guid: 315682e37de57b34680a55b183f28cec, type: 2}

@@ -52,7 +52,7 @@ public class TimeRewind : MonoBehaviour
 
         timer += Time.deltaTime;
 
-        if (Input.GetKeyDown(KeyCode.R) && !isRewinding)
+        if (Input.GetKeyDown(KeyCode.W) && !isRewinding)
         {
             StartCoroutine(SmoothRewind());
         }

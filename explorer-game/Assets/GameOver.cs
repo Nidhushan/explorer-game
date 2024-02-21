@@ -7,6 +7,8 @@ public class GameOver : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        GameController.state = GameState.InMenu;
         SceneManager.LoadScene("start");
+
     }
 }

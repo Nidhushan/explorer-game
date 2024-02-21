@@ -10,7 +10,7 @@ public class SceneReset : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.R))
         {
             ResetScene();
         }
