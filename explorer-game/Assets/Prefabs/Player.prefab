@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 693389712545249700}
   m_Layer: 0
   m_Name: Sprite
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -198,6 +198,8 @@ MonoBehaviour:
   dashSpeed: 10
   GhostColor: {r: 1, g: 0, b: 0.5882353, a: 0.5411765}
   IsGhost: 0
+  shadowPrefab: {fileID: 0}
+  shadowDuration: 5
 --- !u!1 &7634638942928483479
 GameObject:
   m_ObjectHideFlags: 0

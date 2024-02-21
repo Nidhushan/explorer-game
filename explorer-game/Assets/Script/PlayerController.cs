@@ -16,6 +16,10 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded = true;
     private bool isDashing = false;
 
+    public GameObject shadowPrefab; 
+    public float shadowDuration = 5.0f;
+    private bool shadowExists = false;
+
     public void Ghostify()
     {
         spriteRenderer.color = GhostColor;
@@ -73,6 +77,11 @@ public class PlayerController : MonoBehaviour
         {
             StartCoroutine(Dash());
         }
+
+        if (Input.GetKeyDown(KeyCode.F) && !shadowExists)
+        {
+            CreateShadow();
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -92,5 +101,17 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(0.3f); 
         rb.gravityScale = originalGravity;
         isDashing = false;
+    }
+    void CreateShadow()
+    {
+        GameObject shadowInstance = Instantiate(shadowPrefab, transform.position, Quaternion.identity);
+        shadowExists = true; 
+
+        Destroy(shadowInstance, shadowDuration);
+        Invoke("ShadowDestroyed", shadowDuration); 
+    }
+    void ShadowDestroyed()
+    {
+        shadowExists = false; 
     }
 }
