@@ -4858,6 +4858,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8d24353c371ebe4f9b76a067f191c2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  init: {fileID: 727721181}
 --- !u!4 &1374527971
 Transform:
   m_ObjectHideFlags: 0
@@ -5742,11 +5743,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5525650128347888066, guid: bdb984686f5efed4e9a96ccce4b12fc1, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5525650128347888066, guid: bdb984686f5efed4e9a96ccce4b12fc1, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5525650128347888066, guid: bdb984686f5efed4e9a96ccce4b12fc1, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -5754,7 +5755,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5525650128347888066, guid: bdb984686f5efed4e9a96ccce4b12fc1, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -318.4936
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6967281700883313104, guid: bdb984686f5efed4e9a96ccce4b12fc1, type: 3}
       propertyPath: m_AnchorMax.y

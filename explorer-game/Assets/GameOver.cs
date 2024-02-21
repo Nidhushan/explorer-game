@@ -8,6 +8,7 @@ public class GameOver : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         GameController.state = GameState.InMenu;
+        CheckpointManager.lastCheckpointPosition = Vector3.zero;
         SceneManager.LoadScene("start");
 
     }

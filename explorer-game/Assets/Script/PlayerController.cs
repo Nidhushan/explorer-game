@@ -40,6 +40,10 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (GameController.state != GameState.InGame)
+        {
+            return;
+        }
         if (!isDashing)
         {
             // Move
@@ -50,7 +54,7 @@ public class PlayerController : MonoBehaviour
             if (rb.velocity.x > 0) { 
                 transform.localScale = new Vector2(1, 1);
             }
-            else
+            else if (rb.velocity.x < 0)
             {
                 transform.localScale = new Vector2(-1, 1);
             }
